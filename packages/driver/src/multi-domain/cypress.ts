@@ -56,7 +56,10 @@ const setup = (cypressConfig: Cypress.Config) => {
 
   const { state, config } = Cypress
 
-  $Commands.create(Cypress, cy, state, config)
+  // @ts-ignore
+  Cypress.Commands = $Commands.create(Cypress, cy, state, config)
+  // @ts-ignore
+  Cypress.isCy = cy.isCy
 
   handleDomainFn(cy, specBridgeCommunicator)
   handleCommands(Cypress, cy, specBridgeCommunicator)
@@ -107,7 +110,7 @@ const onBeforeAppWindowLoad = (Cypress: Cypress.Cypress, cy: $Cy) => (autWindow:
       // TODO: implement these commented out bits
       // stability.isStable(false, 'beforeunload')
 
-      // Cookies.setInitial()
+      cy.Cookies.setInitial()
 
       // timers.reset()
 
